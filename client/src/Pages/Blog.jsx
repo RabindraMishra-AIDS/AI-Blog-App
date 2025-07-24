@@ -5,21 +5,63 @@ import Navbar from '../components/Navbar';
 import Moment from "moment";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import { useAppContext } from '../../context/AppContext';
+import {toast} from "react-hot-toast";
 
 const Blog = () => {
   const { id } = useParams();
+
+  const {axios}=useAppContext();
   const [data, setData] = useState(null);
   const [comment, setComment] = useState([]);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   //6805ee7dd8f584af5da78d37
-  const fetchBlogData = async () => {
-    const data = blog_data.find((i) => i._id == id);
-    setData(data);
-  };
+//   const fetchBlogData = async () => {
+//     try{
+//       const {data}=await axios.get(`/api/blog/${id}`);
+//       data.sucess ?setData(data.blog):toast.error(data.message);
+//     }
+//     catch(error){
+// toast.error(error.message);
+//     }
+//   };
+
+
+const fetchBlogData = async () => {
+  try {
+    console.log('Fetching blog with ID:', id); // Debug log
+    const {data} = await axios.get(`/api/blog/${id}`);
+    console.log('API Response:', data); // Debug log
+    if (data.sucess) {
+      setData(data.blog);
+    } else {
+      toast.error(data.message);
+      setData(false); // Add this to handle failure case
+    }
+  } catch(error) {
+    console.error('Error fetching blog:', error); // Debug log
+    toast.error(error.message);
+    setData(false); // Add this to handle error case
+  }
+};
+
+
+
 
   const fetchComment = async () => {
-    setComment(comments_data);
+    try{
+      const {data}=await axios.post('/api/blog/comments',{blogId:id})
+      if(data.sucess){
+        setComment(data.comments);
+      }
+      else{
+        toast.error(data.message)
+      }
+    }
+    catch(error){
+toast.error(error.message);
+    }
   }
   const addComment = async (e) => {
     e.preventDefault;

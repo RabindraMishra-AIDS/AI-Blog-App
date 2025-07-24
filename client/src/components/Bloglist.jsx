@@ -2,17 +2,35 @@ import React, { useState, useMemo } from 'react'
 import { blog_data, blogCategories } from "../assets/assets";
 import { motion } from "framer-motion";
 import Blogcard from './Blogcard';
+import { useAppContext } from '../../context/AppContext';
 
 const Bloglist = () => {
   const [menu, setMenu] = useState("All");
+  const { blogs, input } = useAppContext();
 
-  // Memoize the random selection so it doesn't reshuffle on every render
-  const filteredBlogs = useMemo(() => {
-    return blog_data
-      .filter((blog) => menu === "All" ? true : blog.category === menu)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 60);
-  }, [menu]);
+
+
+const filteredBlog = useMemo(() => {
+  let result = blogs;
+  
+  // Filter by category first
+  if (menu !== "All") {
+    result = result.filter(blog => 
+      blog.category.toLowerCase().trim() === menu.toLowerCase().trim()
+    );
+  }
+  
+  // Then filter by search input
+  if (input) {
+    result = result.filter(blog =>
+      blog.title.toLowerCase().includes(input.toLowerCase()) ||
+      (blog.category && blog.category.toLowerCase().includes(input.toLowerCase()))
+    );
+  }
+  
+  return result;
+}, [blogs, menu, input]);
+
 
   return (
     <div>
@@ -37,7 +55,7 @@ const Bloglist = () => {
 
       {/* Blog Cards */}
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40'>
-        {filteredBlogs.map((blog) => (
+        {filteredBlog.map((blog) => (
           <Blogcard key={blog._id} blog={blog} />
         ))}
       </div>

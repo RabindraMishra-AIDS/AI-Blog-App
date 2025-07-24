@@ -40,7 +40,7 @@ export const addBlog = async (req, res) => {
 
         await Blog.create({ title, subTitle, description, category, image, isPublished });
 
-        res.json({ sucess: true, message: "Blog Added Sucessfully" });
+        res.json({ sucess: true, message: "Blog Added sucessfully" });
 
     }
     catch (error) {
@@ -85,7 +85,7 @@ export const deleteBlogById = async (req, res) => {
 //Delete all comments associated with this Blog
 await Comment.deleteMany({blog:id});
 
-        res.json({ sucess: true, message: 'Blog Deleted Sucessfully' })
+        res.json({ sucess: true, message: 'Blog Deleted sucessfully' })
     }
     catch (error) {
         res.json({ sucess: false, message: error.message });
