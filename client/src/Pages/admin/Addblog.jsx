@@ -2,6 +2,7 @@ import React, { useState,useRef, useEffect } from 'react';
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from 'quill';
 import {useAppContext} from "../../../context/AppContext";
+import {toast} from "react-hot-toast";
 
 const Addblog = () => {
 
@@ -129,4 +130,4 @@ if(!quillRef.current && editorRef.current){
   )
 }
 
-export default Addblog
+export default Addblog;

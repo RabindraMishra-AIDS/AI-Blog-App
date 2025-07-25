@@ -3,6 +3,7 @@ import { blog_data, blogCategories } from "../assets/assets";
 import { motion } from "framer-motion";
 import Blogcard from './Blogcard';
 import { useAppContext } from '../../context/AppContext';
+import {toast} from "react-hot-toast";
 
 const Bloglist = () => {
   const [menu, setMenu] = useState("All");
