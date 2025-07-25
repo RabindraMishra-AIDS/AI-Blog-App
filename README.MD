@@ -3,7 +3,9 @@
 **Dainik** is a full-featured, user-friendly blog website with integrated AI capabilities. It allows users to read and search blogs in categories like **Technology**, **Finance**, **Startups**, and **Lifestyle**, and empowers admins with full content control. The platform includes an AI tool to assist in content creation, making blogging smarter and faster.
 
 ---
+## 🌍 Project is Live on: [DainikBlog](https://dainikblog.vercel.app)
 
+--
 ## 📖 Description
 
 Dainik offers:
