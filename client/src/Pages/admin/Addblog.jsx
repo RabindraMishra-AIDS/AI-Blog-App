@@ -1,8 +1,13 @@
 import React, { useState,useRef, useEffect } from 'react';
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from 'quill';
+import {useAppContext} from "../../../context/AppContext";
 
 const Addblog = () => {
+
+const {axios}=useAppContext();
+
+const [isAdding,setIsAdding]=useState(false);
 
 const [image,setImage]=useState(false); //Storing state of loaded images
 const [title,setTitle]=useState('');
@@ -27,7 +32,38 @@ const onRemoveImage =() => {
   };
 
 const onSubmitHandler =async(e)=>{
-  e.preventDefault();
+  try{
+ e.preventDefault();
+ setIsAdding(true)
+
+ const blog ={
+  title,subtitle,
+  description:quillRef.current.root.innerHTML,
+  category,isPublished
+
+ }
+ const formData=new FormData();
+ formData.append('blog',JSON.stringify(blog));
+ formData.append('image',image);
+
+ const {data}=await axios.post(`/api/blog/add`,formData);
+ if(data.sucess){
+  toast.success(data.message);
+  setImage(false);
+  setTitle('');
+  quillRef.current.root.innerHTML='';
+  setCategory('Startup')
+ }
+ else{
+  toast.error(data.message);
+ }
+  }
+  catch(error){
+toast.error(error.message);
+  }
+  finally{
+    setIsAdding(false);
+  }
 }
 
 
@@ -86,7 +122,7 @@ if(!quillRef.current && editorRef.current){
   <input type="checkbox" className='scale-125 cursor-pointer' checked={isPublished} onChange={e=>setisPublished(e.target.checked)} />
 </div>
 
-<button type='submit' className='mt-8 w-40 h-10 bg-green-600 text-white rounded cursor-pointer text-sm'>Add Blog</button>
+<button disabled={isAdding} type='submit' className='mt-8 w-40 h-10 bg-green-600 text-white rounded cursor-pointer text-sm'>{isAdding ? 'Adding ..': 'Add Blog'}</button>
 
 </div>
     </form>

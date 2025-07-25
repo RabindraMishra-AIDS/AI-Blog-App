@@ -20,7 +20,7 @@ blogRouter.post('/toggle-publish', auth,togglePublish);
 //Need to protect the router ie. only for authenticated user.
 
 
-blogRouter.post('/add-comment',addComment);
+blogRouter.post('/add-comments',addComment);
 blogRouter.post('/comments',getBlogComments);
 
 

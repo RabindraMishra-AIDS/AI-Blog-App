@@ -6,65 +6,58 @@ import Moment from "moment";
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import { useAppContext } from '../../context/AppContext';
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const Blog = () => {
   const { id } = useParams();
 
-  const {axios}=useAppContext();
+  const { axios } = useAppContext();
   const [data, setData] = useState(null);
   const [comment, setComment] = useState([]);
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   //6805ee7dd8f584af5da78d37
-//   const fetchBlogData = async () => {
-//     try{
-//       const {data}=await axios.get(`/api/blog/${id}`);
-//       data.sucess ?setData(data.blog):toast.error(data.message);
-//     }
-//     catch(error){
-// toast.error(error.message);
-//     }
-//   };
 
-
-const fetchBlogData = async () => {
-  try {
-    console.log('Fetching blog with ID:', id); // Debug log
-    const {data} = await axios.get(`/api/blog/${id}`);
-    console.log('API Response:', data); // Debug log
-    if (data.sucess) {
-      setData(data.blog);
-    } else {
-      toast.error(data.message);
-      setData(false); // Add this to handle failure case
+  const fetchBlogData = async () => {
+    try {
+      const { data } = await axios.get(`/api/blog/${id}`);
+      data.sucess ? setData(data.blog) : toast.error(data.message);
     }
-  } catch(error) {
-    console.error('Error fetching blog:', error); // Debug log
-    toast.error(error.message);
-    setData(false); // Add this to handle error case
-  }
-};
-
-
-
+    catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const fetchComment = async () => {
-    try{
-      const {data}=await axios.post('/api/blog/comments',{blogId:id})
-      if(data.sucess){
+    try {
+      const { data } = await axios.post('/api/blog/comments', { blogId: id })
+      if (data.sucess) {
         setComment(data.comments);
       }
-      else{
+      else {
         toast.error(data.message)
       }
     }
-    catch(error){
-toast.error(error.message);
+    catch (error) {
+      toast.error(error.message);
     }
   }
   const addComment = async (e) => {
-    e.preventDefault;
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('/api/blog/add-comments', { blog: id, name, content });
+      if (data.sucess) {
+        toast.success(data.message);
+        setName('');
+        setContent('')
+      }
+      else {
+        toast.error(data.message)
+      }
+    }
+    catch (error) {
+      toast.error(error.message);
+    }
   }
 
 
@@ -80,12 +73,12 @@ toast.error(error.message);
         <p className='text-green py-4 font-medium'>Published on: {Moment(data.createdAT).format('MMMM Do YYYY')}</p>
         <h1 className='text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800'>{data.title}</h1>
         <h2 className='my-5 max-w-lg truncate mx-auto'>{data.subTitle}</h2>
-        <p className='inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-green/5 font-medium text-green'>Michael Obreion</p>
+        <p className='inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-green/5 font-medium text-green'>Rabindra Mishra</p>
       </div>
 
 
       <div className='mx-5 max-w-5xl md:mx-auto my-10 mt-6'>
-        <img src={data.image} alt="" className='rounded-3xl mb-5' />
+        <img src={data.image} alt="" className="rounded-3xl mb-5 max-w-[75%] h-auto max-h-[70vh] mx-auto block object-contain" />
         <div className='rich-text max-w-3xl mx-auto' dangerouslySetInnerHTML={{ __html: data.description }}></div>
 
         {/* Comments Section */}
@@ -120,17 +113,17 @@ toast.error(error.message);
         <div className='mx-auto max-w-3xl my-4'>
           <p className='font-semibold max-w-3xl'>Share your Article on Social Media</p>
           <div className='flex'>
-            <img src={assets.facebook_icon} alt="facebook"  className='cursor-pointer'/>
+            <img src={assets.facebook_icon} alt="facebook" className='cursor-pointer' />
             <img src={assets.twitter_icon} alt="twitter" className='cursor-pointer' />
             <img src={assets.googleplus_icon} alt="google_icon" className='cursor-pointer' />
           </div>
         </div>
 
       </div>
-      <Footer/>
+      <Footer />
 
     </div>
-  ) : <Loader/>
+  ) : <Loader />
 }
 
 export default Blog
