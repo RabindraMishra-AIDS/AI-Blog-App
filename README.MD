@@ -19,29 +19,11 @@ Both users and admins enjoy a clean, intuitive interface optimized with modern d
 
 ## 🛠️ Tech Stack
 
-### Frontend (Client)
-- **React 19**
-- **Tailwind CSS**
-- **Vite**
-- **Axios**
-- **Framer Motion**
-- **React Router DOM**
-- **Quill (Rich Text Editor)**
-- **Marked**
-- **Moment.js**
-- **React Icons**
-- **React Hot Toast**
-
-### Backend (Server)
-- **Node.js (ESM)**
-- **Express 5**
-- **MongoDB & Mongoose**
-- **JWT (Authentication)**
-- **dotenv**
-- **multer (File Uploads)**
-- **ImageKit (Image Hosting)**
-- **Google GenAI SDK**
-- **CORS**
+| Layer       | Technologies                                                                 |
+|-------------|-------------------------------------------------------------------------------|
+| **Frontend**| React 19, Tailwind CSS, Vite, Axios, React Router DOM, Quill, Marked, Framer Motion, React Hot Toast, React Icons, Moment.js |
+| **Backend** | Node.js, Express 5, MongoDB, Mongoose, JWT, dotenv, multer, cors, ImageKit, Google GenAI |
+| **Tools**   | ESLint, Vercel (for deployment), Git, GitHub                                 |
 
 ---
 
@@ -108,6 +90,7 @@ Follow these steps to run the project locally:
 git clone https://github.com/your-username/dainik.git
 cd dainik
 
+
 cd server
 npm install
 cp .env.example .env   # Fill in your MongoDB URI, JWT secret, ImageKit keys, etc.
@@ -116,3 +99,10 @@ npm run server
 cd ../client
 npm install
 npm run dev
+```
+
+### Why Vercel.config?
+ vercel.config.js file is important for:
+- Rewriting routes (e.g., redirecting /api requests to backend server)
+- Defining custom headers for better security
+- Ensuring proper SSR/CSR behavior during Vercel deployment
