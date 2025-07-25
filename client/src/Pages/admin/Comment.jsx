@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { comments_data } from "../../assets/assets"
 import Commenttableitem from '../../components/admin/Commenttableitem';
+import { useAppContext } from '../../../context/AppContext';
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
   const [filter, setFilter] = useState('Not Approved');
 
-  const fetchComments = () => {
-    setComments(comments_data);
+  const {axios}=useAppContext();
+  const fetchComments = async () => {
+    try {
+      const {data} = await axios.get('/api/admin/comments');
+      data.sucess ? setComments(data.comments): toast.error(data.message);
+
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   useEffect(() => {
@@ -19,8 +27,8 @@ const Comment = () => {
       <div className='flex justify-between items-center max-w-3xl'>
         <h1>Comments</h1>
         <div className='flex gap-4'>
-          <button className={`shadow-custom-sm border rounded-full px-4 py-1 cursor-pointer text-xs ${filter === 'Approved' ? 'text-red-600' : 'text-green-600'} `} onClick={() => setFilter('Approved')}>Approved</button>
-          <button className={`shadow-custom-sm border rounded-full px-4 py-1 cursor-pointer text-xs ${filter === 'Not Approved' ? 'text-red-500' : 'text-green-600'} `} onClick={() => setFilter('Not Approved')}>Not Approved</button>
+          <button className={`shadow-custom-sm border rounded-full px-4 py-1 cursor-pointer text-xs ${filter === 'Approved' ? 'text-green-600' : 'text-black-600'} `} onClick={() => setFilter('Approved')}>Approved</button>
+          <button className={`shadow-custom-sm border rounded-full px-4 py-1 cursor-pointer text-xs ${filter === 'Not Approved' ? 'text-red-600' : 'text-black'} `} onClick={() => setFilter('Not Approved')}>Not Approved</button>
         </div>
       </div>
 <div className='relative h-4/5 max-w-3xl overflow-x-auto mt-4 bg-white shadow rounded-lg scrollbar-hide'>

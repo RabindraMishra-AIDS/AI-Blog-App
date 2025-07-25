@@ -11,7 +11,7 @@ const {axios,setToken}=useAppContext();
         try{
 const {data}=await axios.post('/api/admin/login',{email,password})
 console.log(data);
-if(data.success){
+if(data.sucess){
     setToken(data.token)
     localStorage.setItem('token',data.token);
     axios.defaults.headers.common['Authorization']=data.token;
