@@ -1,11 +1,15 @@
 # 📰 Dainik - AI-Powered Blog Website
 
 **Dainik** is a full-featured, user-friendly blog website with integrated AI capabilities. It allows users to read and search blogs in categories like **Technology**, **Finance**, **Startups**, and **Lifestyle**, and empowers admins with full content control. The platform includes an AI tool to assist in content creation, making blogging smarter and faster.
+(helloadmin)
 
 ---
 ## 🌍 Project is Live on: [DainikBlog](https://dainikblog.vercel.app)
+## Watch Demonstration Below:
+https://github.com/user-attachments/assets/f15a6ee2-7b67-486f-b35e-2ce61d4dd524
 
---
+---
+
 ## 📖 Description
 
 Dainik offers:
